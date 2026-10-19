@@ -29,3 +29,6 @@ logs/
 
 # Test and coverage output
 jacoco/
+
+# Spring Initializr help file
+HELP.md
