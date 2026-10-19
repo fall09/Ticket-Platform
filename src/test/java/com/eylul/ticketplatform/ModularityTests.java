@@ -1,5 +1,6 @@
 package com.eylul.ticketplatform;
 
+import com.eylul.ticketplatform.TicketPlatformApplication;
 import org.junit.jupiter.api.Test;
 import org.springframework.modulith.core.ApplicationModules;
 
