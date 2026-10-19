@@ -1,0 +1,31 @@
+# Build output
+target/
+build/
+out/
+
+# IDEs
+.idea/
+*.iml
+.vscode/
+.classpath
+.project
+.settings/
+*.swp
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Secrets and local config
+.env
+*.pem
+*.key
+application-local.yml
+application-local.properties
+
+# Logs
+*.log
+logs/
+
+# Test and coverage output
+jacoco/
