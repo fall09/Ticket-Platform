@@ -98,12 +98,21 @@ Notation: **U** unit, **I** integration (API), **C** concurrency.
 | TC-EVT-1-07 | 6 | Sales end after event start, no event end time | 400 | U |
 | TC-EVT-1-08 | 6 | Sales end after event start, with an event end time; and sales end after the event end time | First accepted, second 400 | U |
 | TC-EVT-1-09 | 7 | USER and anonymous try to create an event | 403 and 401 | I |
-| TC-EVT-1-10 | FR-EVT-1 | Missing title, venue or city | 400 names the field | I |
+| TC-EVT-1-10 | FR-EVT-1 | Missing title or venue | 400 names the field | I |
 | TC-EVT-2-01 | 1 | Add Standard and VIP to my event | Saved with price and quantity | I |
 | TC-EVT-2-02 | 2 | Quantity 0, quantity -5, price -1 | 400 each | U |
 | TC-EVT-2-03 | 4 | Price 0 | Accepted as a free category | U |
 | TC-PAY-1-07 | 4 | Reserve and pay for a free category (amount 0) | Normal purchase: booking code, tickets, limit counted, stored amount 0 | I |
 | TC-EVT-2-04 | 3 | Duplicate category name in the same event; same name in another event | First rejected, second accepted | I |
+| TC-EVT-8-01 | 1 | Search venues by name and by city | Matching venues returned | I |
+| TC-EVT-8-02 | 2 | Organizer creates a new venue | Saved, visible to another organizer | I |
+| TC-EVT-8-03 | 3 | Create "Harbiye  Açıkhava!" when "harbiye açıkhava" exists in the same city | Nothing created, existing venue returned | U, I |
+| TC-EVT-8-04 | 3 | Same name in a different city | New venue created | I |
+| TC-EVT-8-05 | 4 | Create a similar name in the same city | Similar venues listed, nothing created until confirmed; with confirmation it is created | I |
+| TC-EVT-8-06 | 5 | Create an event with a venue | Event city equals venue city | I |
+| TC-EVT-8-07 | 6 | Missing name, address or city | 400 | I |
+| TC-EVT-8-08 | 7 | USER creates a venue | 403 | I |
+| TC-EVT-8-09 | 3 | Two parallel creations of the same venue | Exactly one venue exists | C |
 | TC-EVT-3-01 | 1 | Publish a DRAFT event with one category | Status PUBLISHED, visible in the list | I |
 | TC-EVT-3-02 | 2 | Publish without categories | Rejected | I |
 | TC-EVT-3-03 | 3 | Publish with a future sales start | Visible, reserving rejected until the time (clock moved) | I |

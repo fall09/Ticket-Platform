@@ -15,7 +15,7 @@ Goal: a registered user reserves tickets for a published event, pays (simulated)
 
 | ID | Item | Priority |
 |---|---|---|
-| TE-1 | Project skeleton (Spring Boot, Maven, Java 21), package-by-module structure, PostgreSQL via Docker Compose, Flyway migrations | Must |
+| TE-1 | Project skeleton (Spring Boot, Maven, Java 25), package-by-module structure, PostgreSQL via Docker Compose, Flyway migrations | Must |
 | TE-2 | OpenAPI contract for Release 1 endpoints (`docs/api/openapi.yaml`), consistent error format | Must |
 | TE-3 | CI pipeline (build and tests on every push) | Should |
 | US-ACC-1 | Register | Must |
@@ -24,6 +24,7 @@ Goal: a registered user reserves tickets for a published event, pays (simulated)
 | US-ACC-5 | Apply to become an organizer | Must |
 | US-ACC-6 | Review organizer applications | Must |
 | US-EVT-1 | Create an event | Must |
+| US-EVT-8 | Find, add and choose venues (shared list, duplicate protection) | Must |
 | US-EVT-2 | Add ticket categories | Must |
 | US-EVT-3 | Publish an event | Must |
 | US-EVT-5 | Manage only my own events (ownership checks; admin audit log comes in Release 3) | Must |
@@ -52,6 +53,7 @@ Goal: payments survive retries, duplicates and timing problems.
 | US-PAY-5 | Undo the payment if ticket issuing fails (compensation) | Must |
 | US-RES-6 | See my reservations | Could |
 | US-EVT-4 | Edit a published event | Should |
+| US-EVT-9 | Manage venues (admin: edit, delete, merge) | Should |
 | US-EVT-7 | Event completion (scheduled job) | Should |
 | US-BRW-2 | Search and filter events (Specification, combined filters) | Should |
 | TE-4 | Integration tests with Testcontainers for the money flows | Must |

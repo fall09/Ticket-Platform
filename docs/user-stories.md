@@ -106,7 +106,7 @@ Links: FR-ROLE-4, FR-ROLE-5.
 **As an** organizer, **I want** to create an event, **so that** I can prepare it before selling tickets.
 
 Acceptance criteria:
-1. **Given** I am an ORGANIZER, **when** I create an event with a title, description, venue, city, date and time, **then** the event is saved with the status DRAFT and is not visible to users.
+1. **Given** I am an ORGANIZER, **when** I create an event with a title, description, a venue from the venue list (US-EVT-8), date and time, **then** the event is saved with the status DRAFT and is not visible to users.
 2. **Given** an event date that is not in the future, **when** I create the event, **then** the request is rejected.
 3. **Given** a per-reservation ticket limit outside 1 to 10, **when** I create the event, **then** the request is rejected; if I give no limit, the default is 4.
 4. **Given** an optional sales start time that is not before the event date, **when** I create the event, **then** the request is rejected.
@@ -185,6 +185,34 @@ Acceptance criteria:
 2. **Given** the sales end time has passed, **when** someone tries to reserve tickets, **then** the request is rejected.
 
 Links: FR-EVT-11, FR-EVT-13.
+
+### US-EVT-8: Find, add and choose venues
+
+**As an** organizer, **I want** to pick my event's venue from a shared list or add it when it is missing, **so that** I do not retype addresses and the same venue is never stored twice.
+
+Acceptance criteria:
+1. **Given** I am an ORGANIZER or ADMIN, **when** I search venues by name and city, **then** I get the matching venues (name, address, city).
+2. **Given** a venue that does not exist, **when** I create it with a name, address and city, **then** it is saved in the shared list and every organizer can use it.
+3. **Given** a venue whose normalized name and city equal an existing venue, **when** I create it, **then** no new venue is created and the existing one is returned.
+4. **Given** a name that is only similar to existing venues in the same city, **when** I create it, **then** the response lists the similar venues and nothing is created until I confirm explicitly.
+5. **Given** a venue, **when** I create an event, **then** the event is linked to it and its city is the venue's city.
+6. **Given** a name, address or city that is missing, **when** I create a venue, **then** the request is rejected.
+7. **Given** I am a USER, **when** I try to create a venue, **then** the request is refused.
+
+Links: FR-VEN-1, FR-VEN-2, FR-VEN-3.
+
+### US-EVT-9: Manage venues (admin)
+
+**As an** admin, **I want** to correct, delete and merge venues, **so that** the shared list stays clean.
+
+Acceptance criteria:
+1. **Given** a venue, **when** I edit its name, address or city, **then** the change is saved and all its events show the new data.
+2. **Given** a venue that has no events, **when** I delete it, **then** it is removed; a venue with events cannot be deleted.
+3. **Given** two duplicate venues, **when** I merge them, **then** all events of the duplicate move to the venue I keep and the duplicate is removed.
+4. **Given** I am an ORGANIZER or USER, **when** I try to edit, delete or merge a venue, **then** the request is refused.
+5. **Given** any of these actions, **then** an audit log entry records who did what and when.
+
+Links: FR-VEN-4, FR-VEN-5, FR-ROLE-6.
 
 ---
 

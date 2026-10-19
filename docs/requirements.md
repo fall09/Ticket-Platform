@@ -25,7 +25,7 @@ Ticket Platform is a backend system for event ticketing and reservations. Organi
 
 ### 3.1 Events
 
-- **FR-EVT-1:** An organizer can create an event (title, description, venue, city, start time) with one or more ticket categories (for example Standard, VIP). Each category has a price and a quantity.
+- **FR-EVT-1:** An organizer can create an event (title, description, venue, start time; the city comes from the venue, see 3.7) with one or more ticket categories (for example Standard, VIP). Each category has a price and a quantity.
 - **FR-EVT-2:** An event has a status: `DRAFT` -> `PUBLISHED` -> `CANCELLED` or `COMPLETED`.
 - **FR-EVT-3:** Only `PUBLISHED` events are visible to users and available for reservation.
 - **FR-EVT-4:** An organizer can manage only their own events. An admin can view, edit and cancel any event.
@@ -92,6 +92,14 @@ Ticket Platform is a backend system for event ticketing and reservations. Organi
 - **FR-BRW-3:** The list can be filtered by title keyword, date range, city and price range, and the filters can be combined.
 - **FR-BRW-4:** The event detail shows the description, venue, city, times and every ticket category with its current price and remaining tickets. DRAFT events are not visible to users. A CANCELLED event stays viewable with its status, so buyers can see what happened.
 - **FR-BRW-5:** Remaining ticket numbers shown to users are informational; the final check happens when reserving (FR-RES-4).
+
+### 3.7 Venues
+
+- **FR-VEN-1:** A venue is its own record (name, address, city), shared by all events. An event is linked to a venue; the city of the event is the city of its venue. The same venue can host many events, of the same organizer or of different organizers.
+- **FR-VEN-2:** Organizers and admins can add venues. When an organizer needs a venue that does not exist yet, creating it adds it to the shared venue list automatically, even if only that organizer ever uses it.
+- **FR-VEN-3:** The same venue must not exist twice. Before creating, the organizer searches the venue list by name and city. The system rejects a new venue whose normalized name (ignoring case, spaces and punctuation) and city match an existing one and returns the existing venue instead. When the name is only similar to existing venues in the same city (for example "Harbiye Acikhava" and "Harbiye Acik Hava Tiyatrosu"), the system answers with the list of similar venues, and the organizer must confirm explicitly to create a new one.
+- **FR-VEN-4:** Because venues are shared, only an admin can edit or delete a venue; a venue that has events cannot be deleted. An admin can fix mistakes and merge duplicates that slipped through.
+- **FR-VEN-5 [PROPOSED]:** All organizers can use any venue of the list. Venue changes by an admin are written to the audit log (FR-ROLE-6).
 
 ## 4. Non-functional requirements
 
