@@ -1,5 +1,7 @@
 package com.eylul.ticketplatform.identity.internal;
 
+import com.eylul.ticketplatform.identity.internal.login.InvalidCredentialsException;
+import com.eylul.ticketplatform.identity.internal.registration.EmailAlreadyUsedException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
 import org.springframework.web.bind.annotation.ExceptionHandler;

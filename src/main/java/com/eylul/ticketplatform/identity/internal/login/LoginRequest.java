@@ -1,4 +1,4 @@
-package com.eylul.ticketplatform.identity.internal;
+package com.eylul.ticketplatform.identity.internal.login;
 
 import jakarta.validation.constraints.NotBlank;
 

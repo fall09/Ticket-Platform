@@ -1,4 +1,4 @@
-package com.eylul.ticketplatform.identity.internal;
+package com.eylul.ticketplatform.identity.internal.security;
 
 import com.nimbusds.jose.jwk.source.ImmutableSecret;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;

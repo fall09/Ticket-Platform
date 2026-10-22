@@ -1,6 +1,8 @@
-package com.eylul.ticketplatform.identity.internal;
+package com.eylul.ticketplatform.identity.internal.registration;
 
 import com.eylul.ticketplatform.identity.Role;
+import com.eylul.ticketplatform.identity.internal.user.AppUser;
+import com.eylul.ticketplatform.identity.internal.user.AppUserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;

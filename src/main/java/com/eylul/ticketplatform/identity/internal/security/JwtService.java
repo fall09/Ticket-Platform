@@ -1,5 +1,6 @@
-package com.eylul.ticketplatform.identity.internal;
+package com.eylul.ticketplatform.identity.internal.security;
 
+import com.eylul.ticketplatform.identity.internal.user.AppUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.oauth2.jose.jws.MacAlgorithm;
 import org.springframework.security.oauth2.jwt.JwsHeader;

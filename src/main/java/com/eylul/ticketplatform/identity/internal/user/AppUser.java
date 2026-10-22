@@ -1,4 +1,4 @@
-package com.eylul.ticketplatform.identity.internal;
+package com.eylul.ticketplatform.identity.internal.user;
 
 import com.eylul.ticketplatform.identity.Role;
 import jakarta.persistence.*;

@@ -1,4 +1,4 @@
-package com.eylul.ticketplatform.identity.internal;
+package com.eylul.ticketplatform.identity.internal.registration;
 
 public class EmailAlreadyUsedException extends RuntimeException {
 

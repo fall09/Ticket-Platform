@@ -1,4 +1,4 @@
-package com.eylul.ticketplatform.identity.internal;
+package com.eylul.ticketplatform.identity.internal.user;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
