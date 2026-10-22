@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 public class AuthController {
 
     private final RegistrationService registrationService;
+    private final LoginService loginService;
 
     @PostMapping("/register")
     @ResponseStatus(HttpStatus.CREATED)
@@ -21,7 +22,8 @@ public class AuthController {
         return new RegisterResponse(newUser.getId(), newUser.getEmail(), newUser.getRole());
     }
 
-
-
-
+    @PostMapping("/login")
+    public LoginResponse login(@Valid @RequestBody LoginRequest loginRequest) {
+        return loginService.login(loginRequest.email(), loginRequest.password());
+    }
 }

@@ -15,4 +15,11 @@ public class IdentityExceptionHandler {
         return problem;
     }
 
+    @ExceptionHandler(InvalidCredentialsException.class)
+    public ProblemDetail handleInvalidCredentialsException(InvalidCredentialsException ex) {
+        ProblemDetail problem = ProblemDetail.forStatusAndDetail(HttpStatus.UNAUTHORIZED, "Invalid email or password");
+        problem.setTitle("Invalid credentials");
+        return problem;
+    }
+
 }
