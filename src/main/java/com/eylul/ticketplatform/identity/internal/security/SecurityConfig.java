@@ -1,5 +1,6 @@
 package com.eylul.ticketplatform.identity.internal.security;
 
+import com.eylul.ticketplatform.identity.internal.admin.AdminProperties;
 import com.nimbusds.jose.jwk.source.ImmutableSecret;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -21,7 +22,7 @@ import javax.crypto.spec.SecretKeySpec;
 import java.nio.charset.StandardCharsets;
 
 @Configuration
-@EnableConfigurationProperties(JwtProperties.class)
+@EnableConfigurationProperties({JwtProperties.class, AdminProperties.class})
 public class SecurityConfig {
     @Bean
     public PasswordEncoder passwordEncoder() {
