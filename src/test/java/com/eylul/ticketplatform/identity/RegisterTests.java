@@ -96,4 +96,21 @@ class RegisterTests {
                 .andExpect(status().isConflict())
                 .andExpect(jsonPath("$.title").value("E-mail already registered"));
     }
+
+    @Test
+    void givenInvalidEmail_whenRegister_thenReturn400() throws Exception {
+        //given body with invalid email format
+        String body = """
+                {
+                  "email": "test",
+                  "password": "Passw0rd!x"
+                }
+                """;
+        //when+then
+        mockMvc.perform(post("/api/auth/register")
+                .contentType(MediaType.APPLICATION_JSON).content(body))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.title").value("Validation failed"))
+                .andExpect(jsonPath("$.errors[0].field").value("email"));
+    }
 }

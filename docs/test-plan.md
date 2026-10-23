@@ -207,7 +207,8 @@ The case tables above are not changed when code is written; progress is tracked 
 | TC-ACC-1-01 | Automated | `RegisterTests.registersNewUserWithRoleUser` | 2026-10-22 |
 | TC-ACC-1-02 | Automated | `RegisterTests.givenExistingEmail_whenRegister_thenReturn409` | 2026-10-23 |
 | TC-ACC-1-03 | Automated | `RegisterTests` (same e-mail in different letter case gives 409) | 2026-10-23 |
-| TC-ACC-1-04 to 1-08 | Manual (partly) | 400 with an `errors` list tried in Postman; each rule and the 8/72 limits still to automate | 2026-10-20 |
+| TC-ACC-1-04 | Automated | `RegisterTests.givenInvalidEmail_whenRegister_thenReturn400` (400, title, first error names `email`) | 2026-10-23 |
+| TC-ACC-1-05 to 1-08 | Manual (partly) | 400 with an `errors` list tried in Postman; each password rule and the 8/72 limits still to automate | 2026-10-20 |
 | TC-ACC-1-09 | Open | check stored hash and response without password | |
 | TC-ACC-1-10 | Manual | register with `"role":"ADMIN"` gives 201 with role USER | 2026-10-22 |
 | TC-ACC-2-01 | Manual | login returns a token | 2026-10-22 |
