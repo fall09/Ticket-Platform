@@ -195,3 +195,27 @@ Each test case lists the criterion number it covers. At the end of every step a 
 
 - Page size above 100: capped or rejected (decide when writing the OpenAPI contract).
 - Test cases for Release 2 to 4 are written when each release starts.
+
+## 10. Test status (updated as tests are written)
+
+The case tables above are not changed when code is written; progress is tracked here. Status values: **Automated** (test class and method), **Manual** (tried by hand in Postman or curl, date), **Open** (not tried yet). Rows are added when work on a story starts.
+
+### 10.1 Accounts
+
+| ID | Status | Where / how | Date |
+|---|---|---|---|
+| TC-ACC-1-01 | Automated | `RegisterTests.registersNewUserWithRoleUser` | 2026-10-22 |
+| TC-ACC-1-02 | Automated | `RegisterTests.givenExistingEmail_whenRegister_thenReturn409` | 2026-10-23 |
+| TC-ACC-1-03 | Automated | `RegisterTests` (same e-mail in different letter case gives 409) | 2026-10-23 |
+| TC-ACC-1-04 to 1-08 | Manual (partly) | 400 with an `errors` list tried in Postman; each rule and the 8/72 limits still to automate | 2026-10-20 |
+| TC-ACC-1-09 | Open | check stored hash and response without password | |
+| TC-ACC-1-10 | Manual | register with `"role":"ADMIN"` gives 201 with role USER | 2026-10-22 |
+| TC-ACC-2-01 | Manual | login returns a token | 2026-10-22 |
+| TC-ACC-2-02 | Manual | wrong password gives 401 | 2026-10-22 |
+| TC-ACC-2-03 | Manual | unknown e-mail gives 401 with the same message | 2026-10-22 |
+| TC-ACC-2-04 | Manual (partly) | no token and broken token give 401; expired token not tried | 2026-10-22 |
+| TC-ACC-7-01 | Manual | admin created from `ADMIN_EMAIL` / `ADMIN_PASSWORD`; login as admin shows role ADMIN | 2026-10-22 |
+| TC-ACC-7-02 | Manual | second start creates nothing, one admin | 2026-10-22 |
+| TC-ACC-7-03 | Manual | no settings: warning in the log, application starts | 2026-10-22 |
+| TC-ACC-7-04 | Manual (partly) | password only goes into `encode`, not into log messages; `git grep` finds no password in the repository | 2026-10-22 |
+| TC-ACC-7-05 | Manual (partly) | register ignores a `role` field; no other public endpoint creates users | 2026-10-22 |
