@@ -1,6 +1,7 @@
 package com.eylul.ticketplatform.identity;
 
 import com.eylul.ticketplatform.TestcontainersConfiguration;
+import com.eylul.ticketplatform.identity.internal.user.AppUser;
 import com.eylul.ticketplatform.identity.internal.user.AppUserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -12,6 +13,7 @@ import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -130,5 +132,28 @@ class RegisterTests {
                 .contentType(MediaType.APPLICATION_JSON).content(body))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.role").value("USER"));
+    }
+
+    @Test
+    @DisplayName("Password is stored as a hash and never returned (OWASP A02)")
+    void givenValidRequest_whenRegister_thenUserIsSavedWithHashedPassword() throws Exception {
+        // given: valid registration body
+        String body = """
+                {
+                  "email": "test.user@example.com",
+                  "password": "Passw0rd!x"
+                }
+                """;
+        // when + then (response): created, and the response has no password
+        mockMvc.perform(post("/api/auth/register")
+                        .contentType(MediaType.APPLICATION_JSON).content(body))
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.password").doesNotExist());
+
+        // then (database): user exists, password is a BCrypt hash
+        AppUser user = appUserRepository.findByEmail("test.user@example.com").orElseThrow();
+        assertThat(user.getPasswordHash()).isNotEqualTo("Passw0rd!x");
+        assertThat(user.getPasswordHash()).startsWith("$2");
+        assertThat(user.getRole()).isEqualTo(Role.USER);
     }
 }

@@ -209,7 +209,7 @@ The case tables above are not changed when code is written; progress is tracked 
 | TC-ACC-1-03 | Automated | `RegisterTests` (same e-mail in different letter case gives 409) | 2026-10-23 |
 | TC-ACC-1-04 | Automated | `RegisterTests.givenInvalidEmail_whenRegister_thenReturn400` (400, title, first error names `email`) | 2026-10-23 |
 | TC-ACC-1-05 to 1-08 | Manual (partly) | 400 with an `errors` list tried in Postman; each password rule and the 8/72 limits still to automate | 2026-10-20 |
-| TC-ACC-1-09 | Open | check stored hash and response without password | |
+| TC-ACC-1-09 | Automated | `RegisterTests.givenValidRequest_whenRegister_thenUserIsSavedWithHashedPassword` (no password in the response; stored value is not the plain password and starts with `$2`; OWASP A02). To strengthen: check the hash with `passwordEncoder.matches` | 2026-10-23 |
 | TC-ACC-1-10 | Automated | `RegisterTests.givenRoleFieldInBody_whenRegister_thenRoleIsStillUser` (201, role is USER; OWASP A01 mass assignment) | 2026-10-23 |
 | TC-ACC-2-01 | Manual | login returns a token | 2026-10-22 |
 | TC-ACC-2-02 | Manual | wrong password gives 401 | 2026-10-22 |
