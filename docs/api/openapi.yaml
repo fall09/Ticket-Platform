@@ -1,0 +1,226 @@
+openapi: 3.1.0
+info:
+  title: Ticket Platform API
+  version: 0.1.0
+  description: |
+    Event ticket and reservation platform. This file covers the accounts endpoints (Release 1).
+    Errors use RFC 9457 Problem Details (`application/problem+json`).
+servers:
+  - url: http://localhost:8080
+    description: Local development
+
+tags:
+  - name: Accounts
+    description: Register, log in, current user
+
+paths:
+  /api/auth/register:
+    post:
+      tags: [Accounts]
+      operationId: register
+      summary: Register a new account
+      description: |
+        Creates an account with the role USER. The role cannot be chosen by the caller;
+        any `role` field in the body is ignored. The e-mail is trimmed and lower-cased.
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RegisterRequest'
+      responses:
+        '201':
+          description: Account created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RegisterResponse'
+        '400':
+          $ref: '#/components/responses/ValidationFailed'
+        '409':
+          description: E-mail is already registered
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetail'
+              example:
+                title: E-mail already registered
+                status: 409
+                detail: Email already exists
+
+  /api/auth/login:
+    post:
+      tags: [Accounts]
+      operationId: login
+      summary: Log in and get an access token
+      description: |
+        Returns a JWT access token (HS256, valid for 60 minutes). An unknown e-mail and a wrong
+        password give the same 401 response, so the API does not reveal which e-mails are registered.
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+      responses:
+        '200':
+          description: Login succeeded
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoginResponse'
+        '400':
+          $ref: '#/components/responses/ValidationFailed'
+        '401':
+          description: Wrong e-mail or password
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetail'
+              example:
+                title: Invalid credentials
+                status: 401
+                detail: Invalid email or password
+
+  /api/me:
+    get:
+      tags: [Accounts]
+      operationId: getCurrentUser
+      summary: Get the logged-in user
+      description: Returns the user id and role read from the access token.
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: The current user
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MeResponse'
+        '401':
+          description: |
+            Token missing, invalid or expired. The response body is currently empty
+            (Spring Security default); a Problem Details body is planned.
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  responses:
+    ValidationFailed:
+      description: Request validation failed
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/ValidationProblem'
+          example:
+            title: Validation failed
+            status: 400
+            detail: Request validation failed
+            errors:
+              - field: email
+                message: must be a well-formed email address
+
+  schemas:
+    RegisterRequest:
+      type: object
+      required: [email, password]
+      properties:
+        email:
+          type: string
+          format: email
+          example: user@example.com
+        password:
+          type: string
+          minLength: 8
+          maxLength: 72
+          description: Must contain an upper-case letter, a digit and a special character.
+          example: GucluSifre1!
+
+    RegisterResponse:
+      type: object
+      required: [id, email, role]
+      properties:
+        id:
+          type: string
+          format: uuid
+        email:
+          type: string
+          format: email
+        role:
+          $ref: '#/components/schemas/Role'
+
+    LoginRequest:
+      type: object
+      required: [email, password]
+      properties:
+        email:
+          type: string
+          example: user@example.com
+        password:
+          type: string
+
+    LoginResponse:
+      type: object
+      required: [accessToken, tokenType]
+      properties:
+        accessToken:
+          type: string
+          description: 'JWT. Send it in the header Authorization: Bearer <token>.'
+        tokenType:
+          type: string
+          enum: [Bearer]
+
+    MeResponse:
+      type: object
+      required: [id, role]
+      properties:
+        id:
+          type: string
+          format: uuid
+        role:
+          $ref: '#/components/schemas/Role'
+
+    Role:
+      type: string
+      enum: [ADMIN, USER, ORGANIZER]
+
+    ProblemDetail:
+      type: object
+      description: RFC 9457 Problem Details
+      properties:
+        type:
+          type: string
+          example: about:blank
+        title:
+          type: string
+        status:
+          type: integer
+        detail:
+          type: string
+        instance:
+          type: string
+
+    ValidationProblem:
+      allOf:
+        - $ref: '#/components/schemas/ProblemDetail'
+        - type: object
+          properties:
+            errors:
+              type: array
+              items:
+                $ref: '#/components/schemas/FieldViolation'
+
+    FieldViolation:
+      type: object
+      required: [field, message]
+      properties:
+        field:
+          type: string
+        message:
+          type: string
