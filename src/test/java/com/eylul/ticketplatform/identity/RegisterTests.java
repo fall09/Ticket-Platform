@@ -113,4 +113,22 @@ class RegisterTests {
                 .andExpect(jsonPath("$.title").value("Validation failed"))
                 .andExpect(jsonPath("$.errors[0].field").value("email"));
     }
+
+    @Test
+    @DisplayName("Role field in the request body is ignored, account is created as USER (OWASP A01, mass assignment)")
+    void givenRoleFieldInBody_whenRegister_thenRoleIsStillUser() throws Exception{
+        // given: request body contains a role field
+        String body = """
+        {
+          "email": "test.user@example.com",
+          "password": "Passw0rd!x",
+          "role": "ADMIN"
+        }
+        """;
+        // when + then
+        mockMvc.perform(post("/api/auth/register")
+                .contentType(MediaType.APPLICATION_JSON).content(body))
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.role").value("USER"));
+    }
 }
