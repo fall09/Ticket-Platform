@@ -208,7 +208,7 @@ The case tables above are not changed when code is written; progress is tracked 
 | TC-ACC-1-02 | Automated | `RegisterTests.givenExistingEmail_whenRegister_thenReturn409` | 2026-10-23 |
 | TC-ACC-1-03 | Automated | `RegisterTests` (same e-mail in different letter case gives 409) | 2026-10-23 |
 | TC-ACC-1-04 | Automated | `RegisterTests.givenInvalidEmail_whenRegister_thenReturn400` (400, title, first error names `email`) | 2026-10-23 |
-| TC-ACC-1-05 to 1-08 | Manual (partly) | 400 with an `errors` list tried in Postman; each password rule and the 8/72 limits still to automate | 2026-10-20 |
+| TC-ACC-1-05 to 1-08 | Automated (unit) | `RegisterRequestValidationTests`: 7 and 73 characters, no upper case, no digit, no special character, 8 and 72 valid (plain JUnit + Validator, no Spring). The integration level (`I`) of 1-05 is covered by the e-mail 400 test in `RegisterTests` | 2026-10-23 |
 | TC-ACC-1-09 | Automated | `RegisterTests.givenValidRequest_whenRegister_thenUserIsSavedWithHashedPassword` (no password in the response; stored value is not the plain password and starts with `$2`; OWASP A02). To strengthen: check the hash with `passwordEncoder.matches` | 2026-10-23 |
 | TC-ACC-1-10 | Automated | `RegisterTests.givenRoleFieldInBody_whenRegister_thenRoleIsStillUser` (201, role is USER; OWASP A01 mass assignment) | 2026-10-23 |
 | TC-ACC-2-01 | Manual | login returns a token | 2026-10-22 |

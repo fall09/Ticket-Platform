@@ -156,4 +156,5 @@ class RegisterTests {
         assertThat(user.getPasswordHash()).startsWith("$2");
         assertThat(user.getRole()).isEqualTo(Role.USER);
     }
+
 }
