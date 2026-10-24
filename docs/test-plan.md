@@ -213,7 +213,7 @@ The case tables above are not changed when code is written; progress is tracked 
 | TC-ACC-1-10 | Automated | `RegisterTests.givenRoleFieldInBody_whenRegister_thenRoleIsStillUser` (201, role is USER; OWASP A01 mass assignment) | 2026-10-23 |
 | TC-ACC-2-01 | Automated | `LoginTests.givenCorrectCredentials_whenLogin_thenReturn200WithToken` (200, `accessToken` not empty, `tokenType` Bearer) | 2026-10-24 |
 | TC-ACC-2-02 | Automated | `LoginTests.givenWrongPassword_whenLogin_thenReturn401` (401, title `Invalid credentials`, detail `Invalid email or password`; OWASP A07) | 2026-10-24 |
-| TC-ACC-2-03 | Manual | unknown e-mail gives 401 with the same message | 2026-10-22 |
+| TC-ACC-2-03 | Automated | `LoginTests.givenUnknownEmail_whenLogin_thenReturn401` (same 401 title and detail as the wrong password; no token in the response; OWASP A07) | 2026-10-24 |
 | TC-ACC-2-04 | Manual (partly) | no token and broken token give 401; expired token not tried | 2026-10-22 |
 | TC-ACC-7-01 | Manual | admin created from `ADMIN_EMAIL` / `ADMIN_PASSWORD`; login as admin shows role ADMIN | 2026-10-22 |
 | TC-ACC-7-02 | Manual | second start creates nothing, one admin | 2026-10-22 |
