@@ -75,4 +75,20 @@ class LoginTests {
                 .andExpect(jsonPath("$.accessToken").doesNotExist());
     }
 
+    @Test
+    @DisplayName("Unknown e-mail returns the same generic 401 as wrong password (OWASP A07)")
+    void givenUnknownEmail_whenLogin_thenReturn401() throws Exception{
+        String body = """
+                {
+                  "email": "nobody@example.com",
+                  "password": "Passw0rd!x"
+                }
+                """;
+        mockMvc.perform(post("/api/auth/login")
+                        .contentType(MediaType.APPLICATION_JSON).content(body))
+                .andExpect(status().isUnauthorized())
+                .andExpect(jsonPath("$.title").value("Invalid credentials"))
+                .andExpect(jsonPath("$.detail").value("Invalid email or password"))
+                .andExpect(jsonPath("$.accessToken").doesNotExist());
+    }
 }
