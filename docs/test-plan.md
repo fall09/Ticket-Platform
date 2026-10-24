@@ -214,7 +214,7 @@ The case tables above are not changed when code is written; progress is tracked 
 | TC-ACC-2-01 | Automated | `LoginTests.givenCorrectCredentials_whenLogin_thenReturn200WithToken` (200, `accessToken` not empty, `tokenType` Bearer) | 2026-10-24 |
 | TC-ACC-2-02 | Automated | `LoginTests.givenWrongPassword_whenLogin_thenReturn401` (401, title `Invalid credentials`, detail `Invalid email or password`; OWASP A07) | 2026-10-24 |
 | TC-ACC-2-03 | Automated | `LoginTests.givenUnknownEmail_whenLogin_thenReturn401` (same 401 title and detail as the wrong password; no token in the response; OWASP A07) | 2026-10-24 |
-| TC-ACC-2-04 | Manual (partly) | no token and broken token give 401; expired token not tried | 2026-10-22 |
+| TC-ACC-2-04 | Automated (partly) | `MeTests`: no token 401, malformed token 401, valid token 200 with `id` and `role`. Expired token not tried yet | 2026-10-24 |
 | TC-ACC-7-01 | Manual | admin created from `ADMIN_EMAIL` / `ADMIN_PASSWORD`; login as admin shows role ADMIN | 2026-10-22 |
 | TC-ACC-7-02 | Manual | second start creates nothing, one admin | 2026-10-22 |
 | TC-ACC-7-03 | Manual | no settings: warning in the log, application starts | 2026-10-22 |
