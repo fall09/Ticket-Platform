@@ -5,6 +5,7 @@ import com.eylul.ticketplatform.TestcontainersConfiguration;
 import com.eylul.ticketplatform.identity.internal.user.AppUser;
 import com.eylul.ticketplatform.identity.internal.user.AppUserRepository;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -55,6 +56,23 @@ class LoginTests {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.accessToken").isNotEmpty())
                 .andExpect(jsonPath("$.tokenType").value("Bearer"));
+    }
+
+    @Test
+    @DisplayName("Wrong password returns generic 401 (OWASP A07)")
+    void givenWrongPassword_whenLogin_thenReturn401() throws Exception {
+        String body = """
+                {
+                  "email": "test.user@example.com",
+                  "password": "WrongPassw0rd!"
+                }
+                """;
+        mockMvc.perform(post("/api/auth/login")
+                .contentType(MediaType.APPLICATION_JSON).content(body))
+                .andExpect(status().isUnauthorized())
+                .andExpect(jsonPath("$.title").value("Invalid credentials"))
+                .andExpect(jsonPath("$.detail").value("Invalid email or password"))
+                .andExpect(jsonPath("$.accessToken").doesNotExist());
     }
 
 }
