@@ -215,8 +215,8 @@ The case tables above are not changed when code is written; progress is tracked 
 | TC-ACC-2-02 | Automated | `LoginTests.givenWrongPassword_whenLogin_thenReturn401` (401, title `Invalid credentials`, detail `Invalid email or password`; OWASP A07) | 2026-10-24 |
 | TC-ACC-2-03 | Automated | `LoginTests.givenUnknownEmail_whenLogin_thenReturn401` (same 401 title and detail as the wrong password; no token in the response; OWASP A07) | 2026-10-24 |
 | TC-ACC-2-04 | Automated (partly) | `MeTests`: no token 401, malformed token 401, valid token 200 with `id` and `role`. Expired token not tried yet | 2026-10-24 |
-| TC-ACC-7-01 | Manual | admin created from `ADMIN_EMAIL` / `ADMIN_PASSWORD`; login as admin shows role ADMIN | 2026-10-22 |
-| TC-ACC-7-02 | Manual | second start creates nothing, one admin | 2026-10-22 |
-| TC-ACC-7-03 | Manual | no settings: warning in the log, application starts | 2026-10-22 |
+| TC-ACC-7-01 | Automated | `AdminInitializerTests.givenSettingsAndEmptyDatabase_whenRun_thenAdminIsCreated` (role ADMIN, e-mail trimmed and lower-cased, password stored as a matching hash) | 2026-10-24 |
+| TC-ACC-7-02 | Automated | `AdminInitializerTests`: run twice gives one admin; existing admin with other settings is not changed | 2026-10-24 |
+| TC-ACC-7-03 | Automated (partly) | `AdminInitializerTests`: null or blank e-mail and password create no admin. The warning log line is not asserted | 2026-10-24 |
 | TC-ACC-7-04 | Manual (partly) | password only goes into `encode`, not into log messages; `git grep` finds no password in the repository | 2026-10-22 |
 | TC-ACC-7-05 | Manual (partly) | register ignores a `role` field (automated in TC-ACC-1-10); no other public endpoint creates users | 2026-10-23 |
